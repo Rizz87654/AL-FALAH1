@@ -8,14 +8,135 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-green: #2e7d32;
+            --primary-dark: #1b5e20;
+            --accent-gold: #f9a825;
+            --accent-orange: #ef6c00;
+            --text-dark: #1a1a1a;
+            --text-light: #888;
+            --white: #ffffff;
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        body { font-family: 'Poppins', sans-serif; line-height: 1.6; color: var(--text-dark); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .section-title {
+            font-size: 2.2rem;
+            text-align: center;
+            color: var(--primary-dark);
+            margin-bottom: 3rem;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent-gold);
+        }
+        .navbar {
+            background: var(--white);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            flex-wrap: wrap;
+        }
+        .logo h2 { color: var(--primary-green); font-size: 1.6rem; }
+        .logo span { color: var(--accent-gold); }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-orange);
+            transition: var(--transition);
+        }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent-orange); }
+        .menu-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--primary-green); }
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-green));
+            color: var(--white);
+            padding: 60px 0 40px;
+            text-align: center;
+        }
+        .page-header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .kegiatan-section { padding: 5rem 0; }
+        .kegiatan-list { max-width: 900px; margin: 0 auto; }
+        .kegiatan-item { display: flex; gap: 2rem; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #eee; }
+        .kegiatan-icon i { font-size: 2.5rem; color: var(--accent-gold); }
+        .kegiatan-detail h3 { color: var(--primary-dark); margin-bottom: 0.25rem; }
+        .kegiatan-detail .date { font-size: 0.85rem; color: var(--text-light); margin-bottom: 0.5rem; display: inline-block; }
+        footer {
+            background: #1a1a1a;
+            color: var(--white);
+            padding: 3rem 5% 1rem;
+        }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #333;
+        }
+        .footer-logo h3 { font-size: 1.5rem; color: var(--primary-green); }
+        .footer-logo span { color: var(--accent-gold); }
+        .footer-links { display: flex; gap: 1.5rem; }
+        .footer-links a { color: var(--white); text-decoration: none; transition: var(--transition); }
+        .footer-links a:hover { color: var(--accent-gold); }
+        .social-icons { display: flex; gap: 1rem; }
+        .social-icons a { color: var(--white); font-size: 1.2rem; transition: var(--transition); }
+        .social-icons a:hover { color: var(--accent-gold); transform: translateY(-3px); }
+        .footer-bottom { text-align: center; padding-top: 2rem; font-size: 0.85rem; color: #888; }
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                background: var(--white);
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                transition: var(--transition);
+            }
+            .nav-links.active { left: 0; }
+            .kegiatan-item { flex-direction: column; text-align: center; gap: 1rem; }
+            .footer-content { flex-direction: column; text-align: center; }
+        }
+    </style>
 </head>
 <body>
 
 <nav class="navbar">
-    <div class="logo">
-        <h2>Al<span>Falah</span></h2>
-    </div>
+    <div class="logo"><h2>Al<span>Falah</span></h2></div>
     <ul class="nav-links" id="navLinks">
         <li><a href="index.html">Beranda</a></li>
         <li><a href="profil.html">Profil</a></li>
@@ -25,26 +146,19 @@
         <li><a href="artikel.html">Artikel</a></li>
         <li><a href="kontak.html">Kontak</a></li>
     </ul>
-    <div class="menu-toggle" id="menuToggle">
-        <i class="fas fa-bars"></i>
-    </div>
+    <div class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></div>
 </nav>
 
 <main>
     <section class="page-header">
-        <div class="container">
-            <h1>Kegiatan Sekolah</h1>
-            <p>Berbagai kegiatan seru dan bermanfaat di Al Falah</p>
-        </div>
+        <div class="container"><h1>Kegiatan Sekolah</h1><p>Berbagai kegiatan seru dan bermanfaat di Al Falah</p></div>
     </section>
 
     <section class="kegiatan-section">
         <div class="container">
             <div class="kegiatan-list">
                 <div class="kegiatan-item">
-                    <div class="kegiatan-icon">
-                        <i class="fas fa-mosque"></i>
-                    </div>
+                    <div class="kegiatan-icon"><i class="fas fa-mosque"></i></div>
                     <div class="kegiatan-detail">
                         <h3>Pesantren Kilat Ramadhan</h3>
                         <span class="date"><i class="far fa-calendar-alt"></i> Maret 2025</span>
@@ -52,9 +166,7 @@
                     </div>
                 </div>
                 <div class="kegiatan-item">
-                    <div class="kegiatan-icon">
-                        <i class="fas fa-microscope"></i>
-                    </div>
+                    <div class="kegiatan-icon"><i class="fas fa-microscope"></i></div>
                     <div class="kegiatan-detail">
                         <h3>Olimpiade Sains Nasional</h3>
                         <span class="date"><i class="far fa-calendar-alt"></i> Februari 2025</span>
@@ -62,9 +174,7 @@
                     </div>
                 </div>
                 <div class="kegiatan-item">
-                    <div class="kegiatan-icon">
-                        <i class="fas fa-hiking"></i>
-                    </div>
+                    <div class="kegiatan-icon"><i class="fas fa-hiking"></i></div>
                     <div class="kegiatan-detail">
                         <h3>Outbound & Leadership Camp</h3>
                         <span class="date"><i class="far fa-calendar-alt"></i> Januari 2025</span>
@@ -72,9 +182,7 @@
                     </div>
                 </div>
                 <div class="kegiatan-item">
-                    <div class="kegiatan-icon">
-                        <i class="fas fa-palette"></i>
-                    </div>
+                    <div class="kegiatan-icon"><i class="fas fa-palette"></i></div>
                     <div class="kegiatan-detail">
                         <h3>Gelar Karya P5</h3>
                         <span class="date"><i class="far fa-calendar-alt"></i> Desember 2024</span>
@@ -88,28 +196,24 @@
 
 <footer>
     <div class="footer-content">
-        <div class="footer-logo">
-            <h3>Al<span>Falah</span></h3>
-            <p>Membentuk Generasi Qur'ani, Berakhlak Mulia, Berprestasi</p>
-        </div>
-        <div class="footer-links">
-            <a href="index.html">Beranda</a>
-            <a href="profil.html">Profil</a>
-            <a href="program.html">Program</a>
-            <a href="kontak.html">Kontak</a>
-        </div>
-        <div class="social-icons">
-            <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
-            <a href="#"><i class="fab fa-tiktok"></i></a>
-        </div>
+        <div class="footer-logo"><h3>Al<span>Falah</span></h3><p>Generasi Qur'ani, Berakhlak Mulia, Berprestasi</p></div>
+        <div class="footer-links"><a href="index.html">Beranda</a><a href="profil.html">Profil</a><a href="program.html">Program</a><a href="kontak.html">Kontak</a></div>
+        <div class="social-icons"><a href="#"><i class="fab fa-facebook"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-youtube"></i></a><a href="#"><i class="fab fa-tiktok"></i></a></div>
     </div>
-    <div class="footer-bottom">
-        <p>&copy; 2025 Sekolah Islam Terpadu Al Falah. All Rights Reserved.</p>
-    </div>
+    <div class="footer-bottom"><p>&copy; 2025 Sekolah Islam Terpadu Al Falah. All Rights Reserved.</p></div>
 </footer>
 
-<script src="js/main.js"></script>
+<script>
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    if (menuToggle) {
+        menuToggle.addEventListener('click', () => { navLinks.classList.toggle('active'); });
+    }
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (navLinks.classList.contains('active')) navLinks.classList.remove('active');
+        });
+    });
+</script>
 </body>
 </html>
