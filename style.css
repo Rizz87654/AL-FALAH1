@@ -25,6 +25,7 @@ body {
     line-height: 1.6;
     color: var(--text-dark);
     overflow-x: hidden;
+    background: var(--white);
 }
 
 .container {
@@ -84,6 +85,10 @@ body {
 .nav-links {
     display: flex;
     gap: 2rem;
+    list-style: none;
+}
+
+.nav-links li {
     list-style: none;
 }
 
@@ -217,26 +222,30 @@ body {
     color: var(--accent-gold);
 }
 
+.image-placeholder p {
+    color: var(--white);
+}
+
 .image-placeholder.large {
     padding: 100px 40px;
 }
 
-/* ========== FEATURES ========== */
-.features, .program-preview, .gallery-preview, .blog-preview {
-    padding: 5rem 0;
-}
-
+/* ========== FEATURES SECTION ========== */
 .features {
+    padding: 5rem 0;
     background: var(--white);
 }
 
-.features-grid, .program-grid, .blog-grid {
+.features-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
-.feature-card, .program-card {
+.feature-card {
     background: var(--bg-light);
     padding: 2rem;
     text-align: center;
@@ -244,23 +253,43 @@ body {
     transition: var(--transition);
 }
 
-.feature-card:hover, .program-card:hover {
+.feature-card:hover {
     transform: translateY(-10px);
     box-shadow: var(--shadow);
 }
 
-.feature-card i, .program-card i {
+.feature-card i {
     font-size: 3rem;
     color: var(--accent-gold);
     margin-bottom: 1rem;
 }
 
-.feature-card h3, .program-card h3 {
+.feature-card h3 {
     color: var(--primary-green);
     margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+}
+
+.feature-card p {
+    color: var(--text-gray);
+    font-size: 0.95rem;
 }
 
 /* ========== BLOG PREVIEW ========== */
+.blog-preview {
+    padding: 5rem 0;
+    background: var(--bg-light);
+}
+
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
 .blog-card {
     background: var(--white);
     border-radius: 15px;
@@ -302,6 +331,13 @@ body {
 .blog-info h3 {
     margin-bottom: 0.5rem;
     font-size: 1.1rem;
+    color: var(--primary-dark);
+}
+
+.blog-info p {
+    color: var(--text-gray);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
 }
 
 .blog-meta {
@@ -318,22 +354,81 @@ body {
     color: var(--accent-orange);
     text-decoration: none;
     font-weight: 500;
+    transition: var(--transition);
+}
+
+.read-more:hover {
+    color: var(--primary-dark);
+}
+
+/* ========== PROGRAM PREVIEW ========== */
+.program-preview {
+    padding: 5rem 0;
+    background: var(--white);
+}
+
+.program-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.program-card {
+    background: var(--bg-light);
+    padding: 2rem;
+    text-align: center;
+    border-radius: 15px;
+    transition: var(--transition);
+}
+
+.program-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow);
+}
+
+.program-card i {
+    font-size: 3rem;
+    color: var(--accent-gold);
+    margin-bottom: 1rem;
+}
+
+.program-card h3 {
+    color: var(--primary-green);
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.program-card p {
+    color: var(--text-gray);
+    font-size: 0.9rem;
 }
 
 /* ========== GALLERY PREVIEW ========== */
+.gallery-preview {
+    padding: 5rem 0;
+    background: var(--primary-light);
+}
+
 .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 .gallery-item {
-    background: var(--primary-light);
-    padding: 50px 20px;
+    background: var(--white);
+    padding: 40px 20px;
     text-align: center;
     border-radius: 15px;
     transition: var(--transition);
     cursor: pointer;
+    box-shadow: var(--shadow);
 }
 
 .gallery-item i {
@@ -356,293 +451,6 @@ body {
 .gallery-item:hover i,
 .gallery-item:hover span {
     color: var(--white);
-}
-
-/* ========== PAGE HEADER ========== */
-.page-header {
-    background: linear-gradient(135deg, var(--primary-dark), var(--primary-green));
-    color: var(--white);
-    padding: 60px 0 40px;
-    text-align: center;
-}
-
-.page-header h1 {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
-}
-
-/* ========== PROFIL PAGE ========== */
-.profil-section {
-    padding: 5rem 0;
-}
-
-.profil-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: start;
-}
-
-.profil-text h2 {
-    color: var(--primary-dark);
-    margin: 1.5rem 0 0.5rem;
-}
-
-.profil-text h2:first-of-type {
-    margin-top: 0;
-}
-
-.profil-text ul {
-    padding-left: 1.5rem;
-    margin-top: 0.5rem;
-}
-
-.profil-text li {
-    margin-bottom: 0.5rem;
-}
-
-.stats-section {
-    background: var(--primary-light);
-    padding: 4rem 0;
-}
-
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-    text-align: center;
-}
-
-.stat-card i {
-    font-size: 2.5rem;
-    color: var(--accent-gold);
-}
-
-.stat-number {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--primary-dark);
-    display: block;
-}
-
-/* ========== KEGIATAN PAGE ========== */
-.kegiatan-section {
-    padding: 5rem 0;
-}
-
-.kegiatan-list {
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-.kegiatan-item {
-    display: flex;
-    gap: 2rem;
-    margin-bottom: 3rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid #eee;
-}
-
-.kegiatan-icon i {
-    font-size: 2.5rem;
-    color: var(--accent-gold);
-}
-
-.kegiatan-detail h3 {
-    color: var(--primary-dark);
-    margin-bottom: 0.25rem;
-}
-
-.kegiatan-detail .date {
-    font-size: 0.85rem;
-    color: var(--text-light);
-    margin-bottom: 0.5rem;
-    display: inline-block;
-}
-
-/* ========== PROGRAM PAGE ========== */
-.program-full-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
-    padding: 3rem 0;
-}
-
-.program-card-large {
-    background: var(--white);
-    border-radius: 15px;
-    padding: 2rem;
-    display: flex;
-    gap: 1.5rem;
-    box-shadow: var(--shadow);
-    transition: var(--transition);
-}
-
-.program-card-large:hover {
-    transform: translateY(-5px);
-}
-
-.program-card-large i {
-    font-size: 2.5rem;
-    color: var(--accent-gold);
-}
-
-.program-info ul {
-    margin-top: 1rem;
-    padding-left: 1.2rem;
-}
-
-.call-to-action {
-    background: linear-gradient(135deg, var(--primary-dark), var(--primary-green));
-    color: var(--white);
-    text-align: center;
-    padding: 4rem 0;
-}
-
-.call-to-action h2 {
-    margin-bottom: 1rem;
-}
-
-/* ========== GALERI PAGE ========== */
-.galeri-categories {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 3rem;
-    flex-wrap: wrap;
-}
-
-.filter-btn {
-    padding: 8px 24px;
-    border: 2px solid var(--primary-green);
-    background: transparent;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: var(--transition);
-    font-weight: 500;
-}
-
-.filter-btn.active,
-.filter-btn:hover {
-    background: var(--primary-green);
-    color: var(--white);
-}
-
-.galeri-full-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-}
-
-.galeri-full-grid .galeri-item {
-    position: relative;
-    background: var(--primary-light);
-    padding: 60px 20px;
-    text-align: center;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.galeri-full-grid .galeri-caption {
-    margin-top: 1rem;
-    font-weight: 500;
-    color: var(--text-dark);
-}
-
-/* ========== ARTIKEL PAGE ========== */
-.artikel-section {
-    padding: 5rem 0;
-}
-
-.artikel-full-list {
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-.artikel-item-large {
-    display: flex;
-    gap: 2rem;
-    margin-bottom: 3rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid #eee;
-}
-
-.artikel-image {
-    min-width: 150px;
-    background: var(--primary-light);
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.artikel-image i {
-    font-size: 3rem;
-    color: var(--primary-green);
-    padding: 40px;
-}
-
-.artikel-content .meta {
-    margin: 0.5rem 0 1rem;
-    font-size: 0.8rem;
-    color: var(--text-light);
-}
-
-.artikel-content .meta span {
-    margin-right: 1rem;
-}
-
-/* ========== KONTAK PAGE ========== */
-.kontak-section {
-    padding: 5rem 0;
-}
-
-.kontak-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-}
-
-.info-card {
-    background: var(--bg-light);
-    padding: 1.5rem;
-    border-radius: 15px;
-    margin-bottom: 1.5rem;
-    text-align: center;
-}
-
-.info-card i {
-    font-size: 2rem;
-    color: var(--accent-gold);
-    margin-bottom: 0.5rem;
-}
-
-.info-card h3 {
-    margin-bottom: 0.5rem;
-    color: var(--primary-dark);
-}
-
-.kontak-form {
-    background: var(--bg-light);
-    padding: 2rem;
-    border-radius: 15px;
-}
-
-.kontak-form h3 {
-    margin-bottom: 1.5rem;
-    color: var(--primary-dark);
-}
-
-.kontak-form input,
-.kontak-form select,
-.kontak-form textarea {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-family: inherit;
 }
 
 /* ========== FOOTER ========== */
@@ -673,9 +481,16 @@ footer {
     color: var(--accent-gold);
 }
 
+.footer-logo p {
+    color: var(--text-light);
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+}
+
 .footer-links {
     display: flex;
     gap: 1.5rem;
+    flex-wrap: wrap;
 }
 
 .footer-links a {
@@ -712,18 +527,30 @@ footer {
 }
 
 /* ========== RESPONSIVE ========== */
+@media (max-width: 1024px) {
+    .features-grid,
+    .program-grid,
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .blog-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media (max-width: 992px) {
-    .hero-container, .profil-content, .kontak-wrapper {
+    .hero-container {
         grid-template-columns: 1fr;
-    }
-    
-    .artikel-item-large {
-        flex-direction: column;
-    }
-    
-    .program-card-large {
-        flex-direction: column;
         text-align: center;
+    }
+    
+    .btn-group {
+        justify-content: center;
+    }
+    
+    .hero-content h1 {
+        font-size: 2.5rem;
     }
 }
 
@@ -749,22 +576,47 @@ footer {
         left: 0;
     }
     
-    .hero-content h1 {
-        font-size: 2.5rem;
+    .nav-links li {
+        margin: 0.5rem 0;
     }
     
     .section-title {
         font-size: 1.8rem;
     }
     
-    .kegiatan-item {
-        flex-direction: column;
-        text-align: center;
-        gap: 1rem;
+    .features-grid,
+    .program-grid,
+    .gallery-grid,
+    .blog-grid {
+        grid-template-columns: 1fr;
     }
     
     .footer-content {
         flex-direction: column;
         text-align: center;
+    }
+    
+    .footer-links {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+    
+    .hero-content h3 {
+        font-size: 1.2rem;
+    }
+    
+    .btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+    
+    .feature-card,
+    .program-card {
+        padding: 1.5rem;
     }
 }
