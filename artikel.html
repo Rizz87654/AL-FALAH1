@@ -8,14 +8,144 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-green: #2e7d32;
+            --primary-dark: #1b5e20;
+            --primary-light: #e8f5e9;
+            --accent-gold: #f9a825;
+            --accent-orange: #ef6c00;
+            --text-dark: #1a1a1a;
+            --text-light: #888;
+            --white: #ffffff;
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        body { font-family: 'Poppins', sans-serif; line-height: 1.6; color: var(--text-dark); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .navbar {
+            background: var(--white);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            flex-wrap: wrap;
+        }
+        .logo h2 { color: var(--primary-green); font-size: 1.6rem; }
+        .logo span { color: var(--accent-gold); }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-orange);
+            transition: var(--transition);
+        }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent-orange); }
+        .menu-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--primary-green); }
+        .btn { padding: 12px 30px; border-radius: 40px; text-decoration: none; font-weight: 600; transition: var(--transition); display: inline-block; }
+        .read-more { color: var(--accent-orange); text-decoration: none; font-weight: 500; }
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-green));
+            color: var(--white);
+            padding: 60px 0 40px;
+            text-align: center;
+        }
+        .page-header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .artikel-section { padding: 5rem 0; }
+        .artikel-full-list { max-width: 900px; margin: 0 auto; }
+        .artikel-item-large {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #eee;
+        }
+        .artikel-image {
+            min-width: 150px;
+            background: var(--primary-light);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .artikel-image i { font-size: 3rem; color: var(--primary-green); padding: 40px; }
+        .category {
+            background: var(--accent-gold);
+            color: var(--text-dark);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+        .artikel-content .meta { margin: 0.5rem 0 1rem; font-size: 0.8rem; color: var(--text-light); }
+        .artikel-content .meta span { margin-right: 1rem; }
+        footer {
+            background: #1a1a1a;
+            color: var(--white);
+            padding: 3rem 5% 1rem;
+        }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #333;
+        }
+        .footer-logo h3 { font-size: 1.5rem; color: var(--primary-green); }
+        .footer-logo span { color: var(--accent-gold); }
+        .footer-links { display: flex; gap: 1.5rem; }
+        .footer-links a { color: var(--white); text-decoration: none; transition: var(--transition); }
+        .footer-links a:hover { color: var(--accent-gold); }
+        .social-icons { display: flex; gap: 1rem; }
+        .social-icons a { color: var(--white); font-size: 1.2rem; transition: var(--transition); }
+        .social-icons a:hover { color: var(--accent-gold); transform: translateY(-3px); }
+        .footer-bottom { text-align: center; padding-top: 2rem; font-size: 0.85rem; color: #888; }
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                background: var(--white);
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                transition: var(--transition);
+            }
+            .nav-links.active { left: 0; }
+            .artikel-item-large { flex-direction: column; text-align: center; }
+            .footer-content { flex-direction: column; text-align: center; }
+        }
+    </style>
 </head>
 <body>
 
 <nav class="navbar">
-    <div class="logo">
-        <h2>Al<span>Falah</span></h2>
-    </div>
+    <div class="logo"><h2>Al<span>Falah</span></h2></div>
     <ul class="nav-links" id="navLinks">
         <li><a href="index.html">Beranda</a></li>
         <li><a href="profil.html">Profil</a></li>
@@ -25,66 +155,43 @@
         <li><a href="artikel.html" class="active">Artikel</a></li>
         <li><a href="kontak.html">Kontak</a></li>
     </ul>
-    <div class="menu-toggle" id="menuToggle">
-        <i class="fas fa-bars"></i>
-    </div>
+    <div class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></div>
 </nav>
 
 <main>
     <section class="page-header">
-        <div class="container">
-            <h1>Artikel & Berita</h1>
-            <p>Informasi terkini seputar kegiatan dan prestasi Al Falah</p>
-        </div>
+        <div class="container"><h1>Artikel & Berita</h1><p>Informasi terkini seputar kegiatan dan prestasi Al Falah</p></div>
     </section>
 
     <section class="artikel-section">
         <div class="container">
             <div class="artikel-full-list">
                 <div class="artikel-item-large">
-                    <div class="artikel-image">
-                        <i class="fas fa-trophy"></i>
-                    </div>
+                    <div class="artikel-image"><i class="fas fa-trophy"></i></div>
                     <div class="artikel-content">
                         <span class="category">Prestasi</span>
                         <h2>Siswa Al Falah Juara Olimpiade Matematika Tingkat Nasional</h2>
-                        <div class="meta">
-                            <span><i class="far fa-calendar-alt"></i> 15 Maret 2025</span>
-                            <span><i class="far fa-user"></i> Admin</span>
-                            <span><i class="far fa-eye"></i> 245 views</span>
-                        </div>
+                        <div class="meta"><span><i class="far fa-calendar-alt"></i> 15 Maret 2025</span><span><i class="far fa-user"></i> Admin</span></div>
                         <p>Prestasi membanggakan kembali diraih oleh siswa SDIT Al Falah. Dalam ajang Olimpiade Matematika Nasional yang diselenggarakan di Jakarta, tim Al Falah berhasil meraih 1 medali emas dan 2 medali perak...</p>
                         <a href="#" class="read-more">Baca Selengkapnya →</a>
                     </div>
                 </div>
                 <div class="artikel-item-large">
-                    <div class="artikel-image">
-                        <i class="fas fa-mosque"></i>
-                    </div>
+                    <div class="artikel-image"><i class="fas fa-mosque"></i></div>
                     <div class="artikel-content">
                         <span class="category">Acara</span>
                         <h2>Pesantren Kilat Ramadhan 1446 H Dimulai</h2>
-                        <div class="meta">
-                            <span><i class="far fa-calendar-alt"></i> 10 Maret 2025</span>
-                            <span><i class="far fa-user"></i> Admin</span>
-                            <span><i class="far fa-eye"></i> 189 views</span>
-                        </div>
-                        <p>Memasuki bulan suci Ramadhan, SDIT Al Falah mengadakan kegiatan pesantren kilat yang diikuti seluruh siswa. Kegiatan ini bertujuan untuk meningkatkan keimanan dan ketakwaan selama bulan Ramadhan...</p>
+                        <div class="meta"><span><i class="far fa-calendar-alt"></i> 10 Maret 2025</span><span><i class="far fa-user"></i> Admin</span></div>
+                        <p>Memasuki bulan suci Ramadhan, SDIT Al Falah mengadakan kegiatan pesantren kilat yang diikuti seluruh siswa. Kegiatan ini bertujuan untuk meningkatkan keimanan dan ketakwaan...</p>
                         <a href="#" class="read-more">Baca Selengkapnya →</a>
                     </div>
                 </div>
                 <div class="artikel-item-large">
-                    <div class="artikel-image">
-                        <i class="fas fa-user-graduate"></i>
-                    </div>
+                    <div class="artikel-image"><i class="fas fa-user-graduate"></i></div>
                     <div class="artikel-content">
                         <span class="category">Informasi</span>
                         <h2>Pendaftaran PPDB 2025/2026 Resmi Dibuka</h2>
-                        <div class="meta">
-                            <span><i class="far fa-calendar-alt"></i> 1 Maret 2025</span>
-                            <span><i class="far fa-user"></i> Admin</span>
-                            <span><i class="far fa-eye"></i> 567 views</span>
-                        </div>
+                        <div class="meta"><span><i class="far fa-calendar-alt"></i> 1 Maret 2025</span><span><i class="far fa-user"></i> Admin</span></div>
                         <p>Yayasan Pendidikan Al Falah secara resmi membuka pendaftaran peserta didik baru untuk tahun ajaran 2025/2026. Pendaftaran dibuka mulai 1 Maret hingga 30 Juni 2025...</p>
                         <a href="#" class="read-more">Baca Selengkapnya →</a>
                     </div>
@@ -96,28 +203,24 @@
 
 <footer>
     <div class="footer-content">
-        <div class="footer-logo">
-            <h3>Al<span>Falah</span></h3>
-            <p>Membentuk Generasi Qur'ani, Berakhlak Mulia, Berprestasi</p>
-        </div>
-        <div class="footer-links">
-            <a href="index.html">Beranda</a>
-            <a href="profil.html">Profil</a>
-            <a href="program.html">Program</a>
-            <a href="kontak.html">Kontak</a>
-        </div>
-        <div class="social-icons">
-            <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
-            <a href="#"><i class="fab fa-tiktok"></i></a>
-        </div>
+        <div class="footer-logo"><h3>Al<span>Falah</span></h3><p>Generasi Qur'ani, Berakhlak Mulia, Berprestasi</p></div>
+        <div class="footer-links"><a href="index.html">Beranda</a><a href="profil.html">Profil</a><a href="program.html">Program</a><a href="kontak.html">Kontak</a></div>
+        <div class="social-icons"><a href="#"><i class="fab fa-facebook"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-youtube"></i></a><a href="#"><i class="fab fa-tiktok"></i></a></div>
     </div>
-    <div class="footer-bottom">
-        <p>&copy; 2025 Sekolah Islam Terpadu Al Falah. All Rights Reserved.</p>
-    </div>
+    <div class="footer-bottom"><p>&copy; 2025 Sekolah Islam Terpadu Al Falah. All Rights Reserved.</p></div>
 </footer>
 
-<script src="js/main.js"></script>
+<script>
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    if (menuToggle) {
+        menuToggle.addEventListener('click', () => { navLinks.classList.toggle('active'); });
+    }
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (navLinks.classList.contains('active')) navLinks.classList.remove('active');
+        });
+    });
+</script>
 </body>
 </html>
