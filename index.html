@@ -4,16 +4,475 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Beranda | Sekolah Islam Terpadu Al Falah</title>
-    <meta name="description" content="Sekolah Islam Terpadu Al Falah - Membentuk Generasi Qur'ani, Berakhlak Mulia, Berprestasi">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --primary-green: #2e7d32;
+            --primary-dark: #1b5e20;
+            --primary-light: #e8f5e9;
+            --accent-gold: #f9a825;
+            --accent-orange: #ef6c00;
+            --text-dark: #1a1a1a;
+            --text-gray: #555;
+            --text-light: #888;
+            --bg-light: #f5f5f5;
+            --white: #ffffff;
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .section-title {
+            font-size: 2.2rem;
+            text-align: center;
+            color: var(--primary-dark);
+            margin-bottom: 3rem;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent-gold);
+            border-radius: 2px;
+        }
+        .text-center {
+            text-align: center;
+        }
+        /* Navbar */
+        .navbar {
+            background: var(--white);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            flex-wrap: wrap;
+        }
+        .logo h2 {
+            color: var(--primary-green);
+            font-size: 1.6rem;
+        }
+        .logo span {
+            color: var(--accent-gold);
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        .nav-links li {
+            list-style: none;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-orange);
+            transition: var(--transition);
+        }
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent-orange);
+        }
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-green);
+        }
+        /* Buttons */
+        .btn {
+            padding: 12px 30px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-block;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+        .btn-primary {
+            background: var(--primary-green);
+            color: var(--white);
+            border: 2px solid var(--primary-green);
+        }
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+        }
+        .btn-outline {
+            border: 2px solid var(--primary-green);
+            color: var(--primary-green);
+            background: transparent;
+        }
+        .btn-outline:hover {
+            background: var(--primary-green);
+            color: var(--white);
+            transform: translateY(-3px);
+        }
+        /* Hero */
+        .hero {
+            min-height: 90vh;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            display: flex;
+            align-items: center;
+            padding: 80px 5% 60px;
+        }
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+        .hero-content h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent-orange);
+            margin-bottom: 1rem;
+        }
+        .hero-content p {
+            color: var(--text-gray);
+            margin-bottom: 1.5rem;
+        }
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .image-placeholder {
+            background: var(--primary-dark);
+            border-radius: 20px;
+            padding: 60px 40px;
+            text-align: center;
+            color: var(--white);
+            box-shadow: var(--shadow);
+        }
+        .image-placeholder i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: var(--accent-gold);
+        }
+        /* Features */
+        .features {
+            padding: 5rem 0;
+            background: var(--white);
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .feature-card {
+            background: var(--bg-light);
+            padding: 2rem;
+            text-align: center;
+            border-radius: 15px;
+            transition: var(--transition);
+        }
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+        }
+        .feature-card i {
+            font-size: 3rem;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+        }
+        .feature-card h3 {
+            color: var(--primary-green);
+            margin-bottom: 0.5rem;
+        }
+        /* Blog Preview */
+        .blog-preview {
+            padding: 5rem 0;
+            background: var(--bg-light);
+        }
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .blog-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        .blog-card:hover {
+            transform: translateY(-5px);
+        }
+        .blog-image {
+            background: var(--primary-light);
+            padding: 40px;
+            text-align: center;
+        }
+        .blog-image i {
+            font-size: 3rem;
+            color: var(--primary-green);
+        }
+        .blog-info {
+            padding: 1.5rem;
+        }
+        .category {
+            background: var(--accent-gold);
+            color: var(--text-dark);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+        .blog-info h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        .blog-meta {
+            margin: 1rem 0;
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+        .read-more {
+            color: var(--accent-orange);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        /* Program Preview */
+        .program-preview {
+            padding: 5rem 0;
+            background: var(--white);
+        }
+        .program-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .program-card {
+            background: var(--bg-light);
+            padding: 2rem;
+            text-align: center;
+            border-radius: 15px;
+            transition: var(--transition);
+        }
+        .program-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+        }
+        .program-card i {
+            font-size: 3rem;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+        }
+        .program-card h3 {
+            color: var(--primary-green);
+            margin-bottom: 0.5rem;
+        }
+        /* Gallery Preview */
+        .gallery-preview {
+            padding: 5rem 0;
+            background: var(--primary-light);
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .gallery-item {
+            background: var(--white);
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 15px;
+            transition: var(--transition);
+            cursor: pointer;
+            box-shadow: var(--shadow);
+        }
+        .gallery-item i {
+            font-size: 3rem;
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+            display: block;
+        }
+        .gallery-item span {
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+        .gallery-item:hover {
+            transform: scale(1.03);
+            background: var(--primary-green);
+        }
+        .gallery-item:hover i,
+        .gallery-item:hover span {
+            color: var(--white);
+        }
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: var(--white);
+            padding: 3rem 5% 1rem;
+        }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #333;
+        }
+        .footer-logo h3 {
+            font-size: 1.5rem;
+            color: var(--primary-green);
+        }
+        .footer-logo span {
+            color: var(--accent-gold);
+        }
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .footer-links a:hover {
+            color: var(--accent-gold);
+        }
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+        }
+        .social-icons a {
+            color: var(--white);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+        .social-icons a:hover {
+            color: var(--accent-gold);
+            transform: translateY(-3px);
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .features-grid, .program-grid, .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .blog-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 992px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .btn-group {
+                justify-content: center;
+            }
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                background: var(--white);
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                box-shadow: var(--shadow);
+                transition: var(--transition);
+            }
+            .nav-links.active {
+                left: 0;
+            }
+            .features-grid, .program-grid, .gallery-grid, .blog-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<!-- ===== NAVBAR (Menu di garis 3) ===== -->
 <nav class="navbar">
     <div class="logo">
         <h2>Al<span>Falah</span></h2>
@@ -33,7 +492,6 @@
 </nav>
 
 <main>
-    <!-- ===== HERO SECTION ===== -->
     <section class="hero">
         <div class="hero-container">
             <div class="hero-content">
@@ -54,7 +512,6 @@
         </div>
     </section>
 
-    <!-- ===== FITUR UTAMA ===== -->
     <section class="features">
         <div class="container">
             <h2 class="section-title">Mengapa Al Falah?</h2>
@@ -83,148 +540,92 @@
         </div>
     </section>
 
-    <!-- ===== ARTIKEL TERBARU (Blog Utama) ===== -->
     <section class="blog-preview">
         <div class="container">
             <h2 class="section-title">Artikel & Berita Terbaru</h2>
             <div class="blog-grid">
                 <div class="blog-card">
-                    <div class="blog-image">
-                        <i class="fas fa-newspaper"></i>
-                    </div>
+                    <div class="blog-image"><i class="fas fa-trophy"></i></div>
                     <div class="blog-info">
                         <span class="category">Prestasi</span>
-                        <h3>Siswa Al Falah Juara Olimpiade Matematika Tingkat Nasional</h3>
+                        <h3>Siswa Al Falah Juara Olimpiade Matematika</h3>
                         <p>Siswa kelas 6 berhasil meraih medali emas dalam ajang Olimpiade...</p>
-                        <div class="blog-meta">
-                            <span><i class="far fa-calendar-alt"></i> 15 Maret 2025</span>
-                            <span><i class="far fa-user"></i> Admin</span>
-                        </div>
+                        <div class="blog-meta"><span><i class="far fa-calendar-alt"></i> 15 Maret 2025</span></div>
                         <a href="artikel.html" class="read-more">Baca Selengkapnya →</a>
                     </div>
                 </div>
                 <div class="blog-card">
-                    <div class="blog-image">
-                        <i class="fas fa-mosque"></i>
-                    </div>
+                    <div class="blog-image"><i class="fas fa-mosque"></i></div>
                     <div class="blog-info">
                         <span class="category">Acara</span>
                         <h3>Pesantren Kilat Ramadhan 1446 H</h3>
                         <p>Kegiatan pesantren kilat akan dilaksanakan pada minggu kedua Ramadhan...</p>
-                        <div class="blog-meta">
-                            <span><i class="far fa-calendar-alt"></i> 10 Maret 2025</span>
-                            <span><i class="far fa-user"></i> Admin</span>
-                        </div>
+                        <div class="blog-meta"><span><i class="far fa-calendar-alt"></i> 10 Maret 2025</span></div>
                         <a href="artikel.html" class="read-more">Baca Selengkapnya →</a>
                     </div>
                 </div>
                 <div class="blog-card">
-                    <div class="blog-image">
-                        <i class="fas fa-user-graduate"></i>
-                    </div>
+                    <div class="blog-image"><i class="fas fa-user-graduate"></i></div>
                     <div class="blog-info">
                         <span class="category">Informasi</span>
-                        <h3>Pendaftaran PPDB 2025/2026 Telah Dibuka!</h3>
-                        <p>Segera daftarkan putra-putri Anda untuk menjadi bagian dari keluarga besar Al Falah...</p>
-                        <div class="blog-meta">
-                            <span><i class="far fa-calendar-alt"></i> 1 Maret 2025</span>
-                            <span><i class="far fa-user"></i> Admin</span>
-                        </div>
+                        <h3>Pendaftaran PPDB 2025/2026 Dibuka!</h3>
+                        <p>Segera daftarkan putra-putri Anda menjadi bagian dari Al Falah...</p>
+                        <div class="blog-meta"><span><i class="far fa-calendar-alt"></i> 1 Maret 2025</span></div>
                         <a href="artikel.html" class="read-more">Baca Selengkapnya →</a>
                     </div>
                 </div>
             </div>
-            <div class="text-center" style="margin-top: 3rem;">
-                <a href="artikel.html" class="btn btn-outline">Lihat Semua Artikel</a>
-            </div>
+            <div class="text-center" style="margin-top: 2rem;"><a href="artikel.html" class="btn btn-outline">Lihat Semua Artikel</a></div>
         </div>
     </section>
 
-    <!-- ===== PROGRAM UNGGULAN PREVIEW ===== -->
     <section class="program-preview">
         <div class="container">
             <h2 class="section-title">Program Unggulan</h2>
             <div class="program-grid">
-                <div class="program-card">
-                    <i class="fas fa-mosque"></i>
-                    <h3>Tahfidz Qur'an</h3>
-                    <p>Program hafalan Al-Qur'an dengan target minimal 3 juz untuk lulusan.</p>
-                </div>
-                <div class="program-card">
-                    <i class="fas fa-flask"></i>
-                    <h3>Sains & Riset</h3>
-                    <p>Laboratorium sains lengkap dan pembinaan olimpiade sains.</p>
-                </div>
-                <div class="program-card">
-                    <i class="fas fa-laptop-code"></i>
-                    <h3>Robotic & Digital</h3>
-                    <p>Pendidikan teknologi digital dan robotic untuk masa depan.</p>
-                </div>
-                <div class="program-card">
-                    <i class="fas fa-futbol"></i>
-                    <h3>Ekstrakurikuler</h3>
-                    <p>Futsal, panahan, pramuka, seni, dan berbagai kegiatan positif.</p>
-                </div>
+                <div class="program-card"><i class="fas fa-mosque"></i><h3>Tahfidz Qur'an</h3><p>Hafalan 3 juz untuk lulusan.</p></div>
+                <div class="program-card"><i class="fas fa-flask"></i><h3>Sains & Riset</h3><p>Lab sains dan olimpiade.</p></div>
+                <div class="program-card"><i class="fas fa-laptop-code"></i><h3>Robotic & Digital</h3><p>Bekal teknologi masa depan.</p></div>
+                <div class="program-card"><i class="fas fa-futbol"></i><h3>Ekstrakurikuler</h3><p>Futsal, panahan, pramuka.</p></div>
             </div>
-            <div class="text-center" style="margin-top: 2rem;">
-                <a href="program.html" class="btn btn-primary">Lihat Semua Program</a>
-            </div>
+            <div class="text-center" style="margin-top: 2rem;"><a href="program.html" class="btn btn-primary">Lihat Semua Program</a></div>
         </div>
     </section>
 
-    <!-- ===== GALERI PREVIEW ===== -->
     <section class="gallery-preview">
         <div class="container">
             <h2 class="section-title">Galeri Kegiatan</h2>
             <div class="gallery-grid">
-                <div class="gallery-item">
-                    <i class="fas fa-chalkboard-user"></i>
-                    <span>Belajar Mengajar</span>
-                </div>
-                <div class="gallery-item">
-                    <i class="fas fa-futbol"></i>
-                    <span>Ekskul Olahraga</span>
-                </div>
-                <div class="gallery-item">
-                    <i class="fas fa-mosque"></i>
-                    <span>Kegiatan Keagamaan</span>
-                </div>
-                <div class="gallery-item">
-                    <i class="fas fa-laptop-code"></i>
-                    <span>Lab Komputer</span>
-                </div>
+                <div class="gallery-item"><i class="fas fa-chalkboard-user"></i><span>Belajar Mengajar</span></div>
+                <div class="gallery-item"><i class="fas fa-futbol"></i><span>Ekskul Olahraga</span></div>
+                <div class="gallery-item"><i class="fas fa-mosque"></i><span>Kegiatan Keagamaan</span></div>
+                <div class="gallery-item"><i class="fas fa-laptop-code"></i><span>Lab Komputer</span></div>
             </div>
-            <div class="text-center" style="margin-top: 2rem;">
-                <a href="galeri.html" class="btn btn-outline">Lihat Galeri Lengkap</a>
-            </div>
+            <div class="text-center" style="margin-top: 2rem;"><a href="galeri.html" class="btn btn-outline">Lihat Galeri Lengkap</a></div>
         </div>
     </section>
 </main>
 
 <footer>
     <div class="footer-content">
-        <div class="footer-logo">
-            <h3>Al<span>Falah</span></h3>
-            <p>Membentuk Generasi Qur'ani, Berakhlak Mulia, Berprestasi</p>
-        </div>
-        <div class="footer-links">
-            <a href="index.html">Beranda</a>
-            <a href="profil.html">Profil</a>
-            <a href="program.html">Program</a>
-            <a href="kontak.html">Kontak</a>
-        </div>
-        <div class="social-icons">
-            <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
-            <a href="#"><i class="fab fa-tiktok"></i></a>
-        </div>
+        <div class="footer-logo"><h3>Al<span>Falah</span></h3><p>Generasi Qur'ani, Berakhlak Mulia, Berprestasi</p></div>
+        <div class="footer-links"><a href="index.html">Beranda</a><a href="profil.html">Profil</a><a href="program.html">Program</a><a href="kontak.html">Kontak</a></div>
+        <div class="social-icons"><a href="#"><i class="fab fa-facebook"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-youtube"></i></a><a href="#"><i class="fab fa-tiktok"></i></a></div>
     </div>
-    <div class="footer-bottom">
-        <p>&copy; 2025 Sekolah Islam Terpadu Al Falah. All Rights Reserved.</p>
-    </div>
+    <div class="footer-bottom"><p>&copy; 2025 Sekolah Islam Terpadu Al Falah. All Rights Reserved.</p></div>
 </footer>
 
-<script src="js/main.js"></script>
+<script>
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    if (menuToggle) {
+        menuToggle.addEventListener('click', () => { navLinks.classList.toggle('active'); });
+    }
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (navLinks.classList.contains('active')) navLinks.classList.remove('active');
+        });
+    });
+</script>
 </body>
 </html>
