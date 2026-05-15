@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Twice Assistant - AI by rizDev</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@32,400,0,0" />
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        :root {
+            --text-color: #ffffff;
+            --subheading-color: #cccccc;
+            --placeholder-color: #aaaaaa;
+            --primary-color: #0f0f23;
+            --secondary-color: #1a1a2e;
+            --secondary-hover-color: #252541;
+            --scrollbar-color: #555555;
+            --accent-color: #8B5CF6;
+            --accent-secondary: #EC4899;
+        }
+
+        body.light-theme {
+            --text-color: #000000;
+            --subheading-color: #666666;
+            --placeholder-color: #888888;
+            --primary-color: #f8f8ff;
+            --secondary-color: #f0f0f5;
+            --secondary-hover-color: #e0e0eb;
+            --scrollbar-color: #c0c0c0;
+        }
+
+        body {
+            color: var(--text-color);
+            background: var(--primary-color);
+            transition: background 0.3s ease;
+        }
+
+        /* Hide validation bubble */
+        .prompt-input:invalid {
+            box-shadow: none;
+        }
+        
+        .prompt-input:required:invalid {
+            box-shadow: none;
+        }
+
+        /* Container */
+        .container {
+            overflow-y: auto;
+            padding: 32px 0 60px;
+            height: calc(100vh - 127px);
+            scrollbar-color: var(--scrollbar-color) transparent;
+        }
+
+        .container :where(.app-header, .suggestions, .message, .prompt-wrapper) {
+            position: relative;
+            margin: 0 auto;
+            width: 100%;
+            padding: 0 20px;
+            max-width: 990px;
+        }
+
+        .container .app-header {
+            margin-top: 3vh;
+            text-align: center;
+        }
+
+        .app-header .heading {
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            background: linear-gradient(to right, var(--accent-color), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .app-header .sub-heading {
+            font-size: clamp(1rem, 4vw, 1.5rem);
+            color: var(--subheading-color);
+        }
+
+        /* Suggestions */
+        .container .suggestions {
+            width: 100%;
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 9.5vh;
+        }
+
+        body.chats-active .container :where(.app-header, .suggestions) {
+            display: none;
+        }
+
+        .suggestions .suggestions-item {
+            cursor: pointer;
+            padding: 18px;
+            min-height: 110px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            border-radius: 16px;
+            justify-content: space-between;
+            background: var(--secondary-color);
+            transition: 0.3s ease;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .suggestions .suggestions-item:hover {
+            background: var(--secondary-hover-color);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .suggestions .suggestions-item .text {
+            font-size: 1rem;
+            font-weight: 500;
+            word-break: break-word;
+        }
+
+        .suggestions .suggestions-item .icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            font-size: 1.3rem;
+            align-self: flex-end;
+            align-items: center;
+            border-radius: 50%;
+            justify-content: center;
+            color: var(--accent-color);
+            background: var(--primary-color);
+        }
+
+        /* Chats */
+        .chats-container .message {
+            display: flex;
+            gap: 11px;
+            align-items: flex-start;
+            animation: messageAppear 0.3s ease-out;
+        }
+
+        @keyframes messageAppear {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chats-container .bot-message {
+            margin: 9px auto;
+        }
+
+        .chats-container .user-message {
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .chats-container .user-message .message-text {
+            padding: 12px 16px;
+            max-width: 85%;
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
+            border-radius: 18px 18px 4px 18px;
+            word-break: break-word;
+            color: white;
+            box-shadow: 0 4px 6px rgba(139, 92, 246, 0.2);
+            font-size: 0.95rem;
+        }
+
+        .message-content {
+            line-height: 1.6;
+            font-size: 0.95rem;
+            color: var(--text-color);
+            padding: 15px;
+            background: var(--secondary-color);
+            border-radius: 18px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.1);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .message-content p {
+            margin-bottom: 12px;
+        }
+
+        .message-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .message-content strong {
+            font-weight: 700;
+            color: var(--accent-secondary);
+        }
+
+        .message-content ul, .message-content ol {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .message-content li {
+            margin-bottom: 6px;
+        }
+
+        .message-content blockquote {
+            border-left: 4px solid var(--accent-color);
+            margin: 12px 0;
+            padding: 10px 15px;
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        .message-content code {
+            background: rgba(139, 92, 246, 0.15);
+            color: var(--accent-color);
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+        }
+
+        .message-content pre {
+            background: var(--secondary-hover-color);
+            padding: 14px;
+            border-radius: 10px;
+            margin: 12px 0;
+            overflow-x: auto;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .message-content pre code {
+            background: none;
+            padding: 0;
+            color: var(--text-color);
+        }
+
+        .message-content a {
+            color: var(--accent-color);
+            text-decoration: none;
+            border-bottom: 1px solid var(--accent-color);
+        }
+
+        .message-content a:hover {
+            color: var(--accent-secondary);
+        }
+
+        /* Prompt Container */
+        .prompt-container {
+            position: fixed;
+            width: 100%;
+            left: 0;
+            bottom: 0;
+            padding: 12px 0;
+            background: var(--primary-color);
+            border-top: 1px solid var(--secondary-color);
+            backdrop-filter: blur(10px);
+        }
+
+        .prompt-container :where(.prompt-wrapper, .prompt-form) {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .prompt-container .prompt-wrapper {
+            margin: 0 auto;
+            width: 100%;
+            padding: 0 15px;
+            max-width: 990px;
+        }
+
+        .prompt-container .prompt-form {
+            height: 52px;
+            width: 100%;
+            border-radius: 30px;
+            background: var(--secondary-color);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .prompt-form:focus-within {
+            box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.3);
+        }
+
+        .prompt-form .prompt-input {
+            width: 100%;
+            height: 100%;
+            background: none;
+            outline: none;
+            border: none;
+            font-size: 0.95rem;
+            color: var(--text-color);
+            padding: 0 20px;
+        }
+
+        .prompt-form .prompt-input::placeholder {
+            color: var(--placeholder-color);
+        }
+
+        /* Remove validation message */
+        .prompt-input:required:invalid,
+        .prompt-input:focus:invalid {
+            outline: none;
+            border: none;
+        }
+
+        .prompt-wrapper button {
+            width: 52px;
+            height: 52px;
+            flex-shrink: 0;
+            cursor: pointer;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            border: none;
+            color: var(--text-color);
+            background: var(--secondary-color);
+            transition: 0.3s ease;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .prompt-wrapper button:hover {
+            background: var(--secondary-hover-color);
+            transform: scale(1.02);
+        }
+
+        #send-prompt-btn {
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
+            color: white;
+            display: flex !important;
+        }
+
+        #send-prompt-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Home Button */
+        .home-btn {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--secondary-color);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            backdrop-filter: blur(5px);
+        }
+
+        .home-btn:hover {
+            background: var(--secondary-hover-color);
+            transform: scale(1.1);
+        }
+
+        .home-btn .material-symbols-rounded {
+            font-size: 1.3rem;
+        }
+
+        /* Top Buttons */
+        .top-buttons {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+
+        .top-buttons button {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            background: var(--secondary-color);
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .top-buttons button:hover {
+            background: var(--secondary-hover-color);
+            transform: scale(1.05);
+        }
+
+        .top-buttons button .material-symbols-rounded {
+            font-size: 1.3rem;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--scrollbar-color);
+            border-radius: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 0 80px;
+                height: calc(100vh - 110px);
+            }
+            
+            .container :where(.app-header, .suggestions, .message, .prompt-wrapper) {
+                padding: 0 15px;
+            }
+            
+            .suggestions .suggestions-item {
+                padding: 14px;
+                min-height: 95px;
+            }
+            
+            .suggestions .suggestions-item .text {
+                font-size: 0.9rem;
+            }
+            
+            .prompt-container {
+                padding: 10px 0;
+            }
+            
+            .prompt-container .prompt-form {
+                height: 48px;
+            }
+            
+            .prompt-wrapper button {
+                width: 48px;
+                height: 48px;
+            }
+            
+            .home-btn, .top-buttons button {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .message-content {
+                font-size: 0.9rem;
+                padding: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px 0 75px;
+            }
+            
+            .suggestions .suggestions-item {
+                padding: 12px;
+                min-height: 85px;
+            }
+            
+            .suggestions .suggestions-item .text {
+                font-size: 0.85rem;
+            }
+            
+            .prompt-container .prompt-form {
+                height: 44px;
+            }
+            
+            .prompt-wrapper button {
+                width: 44px;
+                height: 44px;
+            }
+            
+            .message-content {
+                font-size: 0.85rem;
+                padding: 10px;
+            }
+            
+            .chats-container .user-message .message-text {
+                font-size: 0.85rem;
+                padding: 10px 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a id="home-btn" class="home-btn" href="index.html">
+        <span class="material-symbols-rounded">home</span>
+    </a>
+    
+    <div class="top-buttons">
+        <button id="theme-toggle-btn">
+            <span class="material-symbols-rounded">light_mode</span>
+        </button>
+        <button id="delete-chats-btn">
+            <span class="material-symbols-rounded">delete</span>
+        </button>
+    </div>
+
+    <div class="container">
+        <header class="app-header">
+            <h1 class="heading">✨ Twice Assistant ✨</h1>
+            <h4 class="sub-heading">Ada yang bisa saya bantu?</h4>
+        </header>
+
+        <ul class="suggestions">
+            <li class="suggestions-item">
+                <p class="text">🌤️ Apa cuaca hari ini?</p>
+                <span class="icon material-symbols-rounded">cloud</span>
+            </li>
+            <li class="suggestions-item">
+                <p class="text">🎬 Rekomendasi film terbaru</p>
+                <span class="icon material-symbols-rounded">movie</span>
+            </li>
+            <li class="suggestions-item">
+                <p class="text">🍰 Cara membuat kue bolu</p>
+                <span class="icon material-symbols-rounded">cake</span>
+            </li>
+            <li class="suggestions-item">
+                <p class="text">📚 Tips belajar yang efektif</p>
+                <span class="icon material-symbols-rounded">school</span>
+            </li>
+        </ul>
+
+        <div class="chats-container"></div>
+
+        <div class="prompt-container">
+            <div class="prompt-wrapper">
+                <form action="#" class="prompt-form" onsubmit="return false;">
+                    <input type="text" placeholder="Ketik pesan..." class="prompt-input" />
+                    <button id="send-prompt-btn" type="button" class="material-symbols-rounded">arrow_upward</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ KONFIGURASI ============
+        const API_KEY = "AIzaSyDDuOrVXromr3Tx4zEy-NVd9kOCyx0nv0Q";
+        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${API_KEY}`;
+        
+        let chatHistory = [];
+
+        // ============ DETEKSI PENCIPTA ============
+        function isAskingAboutCreator(message) {
+            const lowerMsg = message.toLowerCase();
+            const keywords = [
+                'siapa pencipta', 'dibuat oleh siapa', 'pencipta kamu', 'siapa yang menciptakan',
+                'creator', 'pembuat', 'developer', 'siapa ciptakan', 'diciptakan oleh',
+                'siapa yang membuat', 'membuat kamu', 'penciptamu', 'ciptaan siapa',
+                'siapa developermu', 'pengembangmu siapa', 'siapa pembuatmu', 'penciptamu siapa'
+            ];
+            return keywords.some(keyword => lowerMsg.includes(keyword));
+        }
+
+        function getCreatorResponse() {
+            return `✨ *Tentang Penciptaku* ✨\n\nSudah pasti **rizDev** karena dia sangat oper power dalam bidang siber, Artificial Intelligence, dan sebagainya. Contohnya dia bisa menciptakan saya yang sangat canggih ini 🥰\n\n📱 *WhatsApp* : enc oleh developer\n🌐 *Website resmi* : riz-dev.vercel.app\n📢 *Telegram* : @Ryuzen54\n\nAda yang bisa saya bantu lagi? 😊`;
+        }
+
+        // ============ FORMAT TEKS ============
+        function formatAIResponse(text) {
+            if (!text) return '';
+            
+            let formatted = text;
+            
+            // Bold
+            formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            
+            // Italic
+            formatted = formatted.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            
+            // Headings
+            formatted = formatted.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+            formatted = formatted.replace(/^## (.*$)/gim, '<h2>$1</h2>');
+            formatted = formatted.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+            
+            // Blockquote
+            formatted = formatted.replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>');
+            
+            // Lists
+            formatted = formatted.replace(/^\* (.*$)/gim, '<li>$1</li>');
+            formatted = formatted.replace(/^- (.*$)/gim, '<li>$1</li>');
+            formatted = formatted.replace(/^\d+\. (.*$)/gim, '<li>$1</li>');
+            
+            formatted = formatted.replace(/(<li>.*<\/li>)(\s*<li>.*<\/li>)*/gs, function(match) {
+                if (match.match(/^\d+\./)) {
+                    return '<ol>' + match + '</ol>';
+                }
+                return '<ul>' + match + '</ul>';
+            });
+            
+            // Inline code
+            formatted = formatted.replace(/`([^`]+)`/g, '<code>$1</code>');
+            
+            // Links
+            formatted = formatted.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+            
+            // Line breaks
+            const lines = formatted.split('\n');
+            let result = [];
+            let paragraph = [];
+            
+            for (let line of lines) {
+                line = line.trim();
+                if (!line) {
+                    if (paragraph.length) {
+                        result.push('<p>' + paragraph.join(' ') + '</p>');
+                        paragraph = [];
+                    }
+                } else if (line.startsWith('<h') || line.startsWith('<ul') || line.startsWith('<ol') || 
+                           line.startsWith('<pre') || line.startsWith('<blockquote') || line.startsWith('<li')) {
+                    if (paragraph.length) {
+                        result.push('<p>' + paragraph.join(' ') + '</p>');
+                        paragraph = [];
+                    }
+                    result.push(line);
+                } else {
+                    paragraph.push(line);
+                }
+            }
+            
+            if (paragraph.length) {
+                result.push('<p>' + paragraph.join(' ') + '</p>');
+            }
+            
+            return result.join('');
+        }
+
+        // ============ FUNGSI UTAMA ============
+        const chatContainer = document.querySelector(".chats-container");
+        const promptInput = document.querySelector(".prompt-input");
+        const sendButton = document.querySelector("#send-prompt-btn");
+        const suggestions = document.querySelectorAll(".suggestions-item");
+        const themeBtn = document.querySelector("#theme-toggle-btn");
+        const deleteBtn = document.querySelector("#delete-chats-btn");
+
+        const scrollToBottom = () => {
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        };
+
+        function addMessage(text, isUser = false) {
+            const messageDiv = document.createElement("div");
+            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+            
+            if (isUser) {
+                const escapedText = text.replace(/[&<>]/g, function(m) {
+                    if (m === '&') return '&amp;';
+                    if (m === '<') return '&lt;';
+                    if (m === '>') return '&gt;';
+                    return m;
+                });
+                messageDiv.innerHTML = `<div class="message-text">${escapedText}</div>`;
+            } else {
+                messageDiv.innerHTML = `<div class="message-content">${formatAIResponse(text)}</div>`;
+            }
+            
+            chatContainer.appendChild(messageDiv);
+            scrollToBottom();
+            return messageDiv;
+        }
+
+        function showTypingIndicator() {
+            const typingDiv = document.createElement("div");
+            typingDiv.className = "message bot-message";
+            typingDiv.id = "typing-indicator";
+            typingDiv.innerHTML = '<div class="message-content"><em>⏳ Mengetik...</em></div>';
+            chatContainer.appendChild(typingDiv);
+            scrollToBottom();
+        }
+
+        function removeTypingIndicator() {
+            const typing = document.getElementById("typing-indicator");
+            if (typing) typing.remove();
+        }
+
+        async function sendMessage() {
+            const message = promptInput.value.trim();
+            if (!message) return;
+
+            // Reset input
+            promptInput.value = "";
+            promptInput.style.height = "auto";
+            
+            // Add user message
+            addMessage(message, true);
+            
+            // Check for creator question
+            if (isAskingAboutCreator(message)) {
+                addMessage(getCreatorResponse(), false);
+                return;
+            }
+            
+            showTypingIndicator();
+
+            try {
+                chatHistory.push({
+                    role: "user",
+                    parts: [{ text: message }]
+                });
+
+                const response = await fetch(API_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ contents: chatHistory })
+                });
+
+                const data = await response.json();
+                
+                if (!response.ok) throw new Error(data.error?.message || 'API Error');
+
+                removeTypingIndicator();
+
+                const responseText = data.candidates[0].content.parts[0].text;
+                addMessage(responseText, false);
+                
+                chatHistory.push({
+                    role: "model", 
+                    parts: [{ text: responseText }]
+                });
+
+            } catch (error) {
+                removeTypingIndicator();
+                addMessage(`❌ Error: ${error.message}`, false);
+                console.error('API Error:', error);
+            }
+        }
+
+        function deleteChats() {
+            if (confirm("🗑️ Hapus semua percakapan?")) {
+                chatContainer.innerHTML = "";
+                chatHistory = [];
+                addMessage("✨ Halo! Saya AI Assistant. Ada yang bisa saya bantu? ✨", false);
+            }
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle("light-theme");
+            const isLight = document.body.classList.contains("light-theme");
+            const themeIcon = themeBtn.querySelector(".material-symbols-rounded");
+            themeIcon.textContent = isLight ? "dark_mode" : "light_mode";
+        }
+
+        // ============ EVENT LISTENERS ============
+        sendButton.addEventListener('click', sendMessage);
+        
+        promptInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        suggestions.forEach(suggestion => {
+            suggestion.addEventListener('click', function() {
+                const text = this.querySelector('.text').textContent;
+                promptInput.value = text;
+                sendMessage();
+            });
+        });
+
+        themeBtn.addEventListener('click', toggleTheme);
+        deleteBtn.addEventListener('click', deleteChats);
+
+        // ============ INITIAL WELCOME ============
+        setTimeout(() => {
+            if (chatContainer.children.length === 0) {
+                addMessage("✨ Halo! Saya AI Assistant. Ada yang bisa saya bantu? ✨", false);
+            }
+        }, 500);
+
+        // Fix for mobile keyboard
+        promptInput.addEventListener('focus', function() {
+            setTimeout(scrollToBottom, 300);
+        });
+    </script>
+</body>
+</html>
